@@ -64,7 +64,7 @@ int main(){
                     for (int j = 0; j < TAM; j++) {
                         //essa linha de baixo provavelmente será retirada adiciona cor usando ASCII o código para chamar ASCII foi passado mas não exatamente as cores  
                         if(i == 6) color=93;
-                        if (j<3 && i<3 || j<3 && i>5 || j>5 && i>5 || j>5 && i<3 || j>2 && j<6 && i>2){
+                        if (j<3 && i<3 || j<3 && i>5 || j>5 && i>5 || j>5 && i<3 || j>2 && j<6 && i>2 && i<6){
                             cout<<"\033["<<color<<"m"; 
                         }else{
                             cout<<"\033["<<0<<"m";
@@ -127,7 +127,6 @@ int main(){
               cout<<"|"<<" Esse jogo foi desenvolvido por "<<"|"<<" Regras do jogo                                            "<<"|\n"
               <<"|                                |                                                           |\n"
               <<"+--------------------------------+-----------------------------------------------------------+\n"
-              //58
               <<"|"<<"  Andrey Felsky                 "<<"| Preencher a grade quadriculada com os números de 1 a 9    "<<"|\n"
               <<"|"<<"                                "<<"|"<<" lista de palavras pré-definidas, ela conterá 6 letras.    "<<"|\n"
               <<"+--------------------------------+-----------------------------------------------------------+\n"
