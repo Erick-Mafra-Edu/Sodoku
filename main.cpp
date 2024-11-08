@@ -3,6 +3,7 @@
 #define TAM 9
 using namespace std;
 int main(){
+    int color = 91;
     int seletor,acertos;
     srand(time(NULL));
     setlocale(LC_ALL, "Portuguese");
@@ -22,7 +23,7 @@ int main(){
     //menuloop
     while (option != 3){
         cout << "\033c";
-        cout << "Selecione uma das poções a seguir: \n 1 • Jogar \n 2 • Sobre \n 3 • Fim \n";
+        cout << "Selecione uma das opções a seguir: \n 1 • Jogar \n 2 • Sobre \n 3 • Fim \n";
         cin >> option;
         switch (option){
         case 1:{
@@ -61,9 +62,16 @@ int main(){
                 for (int i = 0; i < TAM; i++) {
                     cout<<i+1<<"|";
                     for (int j = 0; j < TAM; j++) {
+                        //essa linha de baixo provavelmente será retirada adiciona cor usando ASCII o código para chamar ASCII foi passado mas não exatamente as cores  
+                        if(i == 6) color=93;
+                        if (j<3 && i<3 || j<3 && i>5 || j>5 && i>5 || j>5 && i<3 || j>2 && j<6 && i>2){
+                            cout<<"\033["<<color<<"m"; 
+                        }else{
+                            cout<<"\033["<<0<<"m";
+                        }    
                         cout << matrizGabarito[i][j];
                         if ((j+1)%3==0){
-                            cout<<"|";
+                            cout<<"\033["<<0<<"m"<<"|";
                         }else{
                             cout<<" ";
                         }
