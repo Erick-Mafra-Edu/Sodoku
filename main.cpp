@@ -4,7 +4,7 @@
 #define TAM 9
 using namespace std;
 int main(){
-    int color = 91;
+    int color = 93;
     int seletor,acertos;
     srand(time(NULL));
     setlocale(LC_ALL, "Portuguese");
@@ -29,36 +29,40 @@ int main(){
         cin >> option;
         switch (option){
         case 1:{
-            seletor = rand() % 3 + 1;
+            //case jogo 
+            seletor = rand() % 4 + 1;
             acertos = 0;
             //matriz resultado do jogo
             switch (seletor){
         case 1:
+            //Sem modificação apenas copia os valores
             for (int i = 0; i < TAM; i++){
                 for (int j = 0; j < TAM; j++){
                     matrizJogo[i][j] = matrizMestra[i][j];
                 }
             }break;
         case 2:
+            //transposta
             for (int i = 0; i < TAM; i++){
                 for (int j = 0; j < TAM; j++){
                     matrizJogo[i][j] = matrizMestra[j][i];
                 }
             }break;
         case 3:
+            //INVERTIDA POR LINHA
             for (int i = 0; i < TAM; i++){
                 for (int j = 0; j < TAM; j++){
                     matrizJogo[i][j] = matrizMestra[8-i][j];
                 }
             }break;
         case 4:
+            // INVERTIDA POR COLUNA
             for (int i = 0; i < TAM; i++){
                 for (int j = 0; j < TAM; j++){
                     matrizJogo[i][j] = matrizMestra[i][8-j];
                 }
             }break;
         }
-            /* jogo */
             //matriz para as respostas do jogador
             int matrizGabarito[TAM][TAM] = {};
             for (int i = 0; i < 41; i++) {
@@ -73,14 +77,13 @@ int main(){
             //variavel pro numero a ser colocado pelo usuario
             int entrada;
             do {
-                /* code */
                 cout<<"  1 2 3 4 5 6 7 8 9\n"
                 <<" +-----+-----+-----+\n";
                 for (int i = 0; i < TAM; i++) {
                     cout<<i+1<<"|";
                     for (int j = 0; j < TAM; j++) {
                         //essa linha de baixo provavelmente será retirada adiciona cor usando ASCII o código para chamar ASCII foi passado mas não exatamente as cores
-                        if(i == 6) color=93;
+                        
                         if (j<3 && i<3 || j<3 && i>5 || j>5 && i>5 || j>5 && i<3 || j>2 && j<6 && i>2 && i<6){
                             cout<<"\033["<<color<<"m";
                         }else{
@@ -139,29 +142,29 @@ int main(){
             break;
         case 2:
             cout<<"\033c";
-              cout<<"+--------------------------------+-----------------------------------------------------------+\n"
-              <<"|                                |                                                           |\n";
-              cout<<"|"<<" Esse jogo foi desenvolvido por "<<"|"<<" Regras do jogo                                            "<<"|\n"
-              <<"|                                |                                                           |\n"
-              <<"+--------------------------------+-----------------------------------------------------------+\n"
-              <<"|"<<"  Andrey Felsky                 "<<"| Preencher a grade quadriculada com os números de 1 a 9    "<<"|\n"
-              <<"+--------------------------------+-----------------------------------------------------------+\n"
-              <<"|"<<"  Bruno Dalbosco Rover          "<<"|"<<" Não repetir números nas linhas horizontais, verticais ou  "<<"|\n"
-              <<"|"<<"                                "<<"|"<<" nos blocos quadrados                                      "<<"|\n"
-              <<"+--------------------------------+-----------------------------------------------------------+\n"
-              <<"|"<<"  Rodrigo Buratto Ribas         "<<"|"<<" O jogo termina quando todas as casas estão preenchidas    "<<"|\n"
-              <<"|"<<"                                "<<"|"<<" corretamente                                              "<<"|\n"
-              <<"+--------------------------------+-----------------------------------------------------------+\n"
-              <<"|"<<"  Wallacy Alvarenga             "<<"|"<<"                                                           "<<"|\n"
-              <<"+--------------------------------+-----------------------------------------------------------+\n"
-              <<"|"<<"  Erick Marlon Mafra            "<<"|"<<"                                                           "<<"|\n"
-              <<"+--------------------------------+-----------------------------------------------------------+\n\n\n";
-              cout << "Data: novembro/2024 \n"
-              << "Professor: Rafael Ballottin Martins / Algoritmos e Programação(24/2) \n"
-              << "Para voltar ao menu pressione Enter";
-              cin.ignore();
-              cout<< cin.get();
-              cout<<"\033c";
+            cout<<"+--------------------------------+-----------------------------------------------------------+\n"
+            <<"|                                |                                                           |\n";
+            cout<<"|"<<" Esse jogo foi desenvolvido por "<<"|"<<" Regras do jogo                                            "<<"|\n"
+            <<"|                                |                                                           |\n"
+            <<"+--------------------------------+-----------------------------------------------------------+\n"
+            <<"|"<<"  Andrey Felsky                 "<<"| Preencher a grade quadriculada com os números de 1 a 9    "<<"|\n"
+            <<"+--------------------------------+-----------------------------------------------------------+\n"
+            <<"|"<<"  Bruno Dalbosco Rover          "<<"|"<<" Não repetir números nas linhas horizontais, verticais ou  "<<"|\n"
+            <<"|"<<"                                "<<"|"<<" nos blocos quadrados                                      "<<"|\n"
+            <<"+--------------------------------+-----------------------------------------------------------+\n"
+            <<"|"<<"  Rodrigo Buratto Ribas         "<<"|"<<" O jogo termina quando todas as casas estão preenchidas    "<<"|\n"
+            <<"|"<<"                                "<<"|"<<" corretamente                                              "<<"|\n"
+            <<"+--------------------------------+-----------------------------------------------------------+\n"
+            <<"|"<<"  Wallacy Alvarenga             "<<"|"<<"                                                           "<<"|\n"
+            <<"+--------------------------------+-----------------------------------------------------------+\n"
+            <<"|"<<"  Erick Marlon Mafra            "<<"|"<<"                                                           "<<"|\n"
+            <<"+--------------------------------+-----------------------------------------------------------+\n\n\n";
+            cout << "Data: novembro/2024 \n"
+            << "Professor: Rafael Ballottin Martins / Algoritmos e Programação(24/2) \n"
+            << "Para voltar ao menu pressione Enter";
+            cin.ignore();
+            cout<< cin.get();
+            cout<<"\033c";
             break;
         case 3:
             cout<<"Até a proxima :)";
