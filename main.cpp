@@ -1,5 +1,6 @@
 #include<iostream>
 #include<locale.h>
+#include <time.h>
 #define TAM 9
 using namespace std;
 int main(){
@@ -9,6 +10,7 @@ int main(){
     setlocale(LC_ALL, "Portuguese");
     int option = 0;
     int linha, coluna;
+    int matrizJogo[TAM][TAM];
     int matrizMestra[TAM][TAM] = {
         4,9,5,2,8,7,3,6,1,
         7,2,8,6,1,3,4,9,5,
@@ -27,20 +29,35 @@ int main(){
         cin >> option;
         switch (option){
         case 1:{
-            seletor = rand() % 4;
+            seletor = rand() % 3 + 1;
             acertos = 0;
             //matriz resultado do jogo
-            int matrizJogo[TAM][TAM] = {
-                4,9,5,2,8,7,3,6,1,
-                7,2,8,6,1,3,4,9,5,
-                3,6,1,9,5,4,7,2,8,
-                6,5,3,8,4,9,2,1,7,
-                9,8,4,1,7,2,6,5,3,
-                2,1,7,5,3,6,9,8,4,
-                1,3,2,4,6,5,8,7,9,
-                5,4,6,7,9,8,1,3,2,
-                8,7,9,3,2,1,5,4,6,
-            };
+            switch (seletor){
+        case 1:
+            for (int i = 0; i < TAM; i++){
+                for (int j = 0; j < TAM; j++){
+                    matrizJogo[i][j] = matrizMestra[i][j];
+                }
+            }break;
+        case 2:
+            for (int i = 0; i < TAM; i++){
+                for (int j = 0; j < TAM; j++){
+                    matrizJogo[i][j] = matrizMestra[j][i];
+                }
+            }break;
+        case 3:
+            for (int i = 0; i < TAM; i++){
+                for (int j = 0; j < TAM; j++){
+                    matrizJogo[i][j] = matrizMestra[8-i][j];
+                }
+            }break;
+        case 4:
+            for (int i = 0; i < TAM; i++){
+                for (int j = 0; j < TAM; j++){
+                    matrizJogo[i][j] = matrizMestra[i][8-j];
+                }
+            }break;
+        }
             /* jogo */
             //matriz para as respostas do jogador
             int matrizGabarito[TAM][TAM] = {};
@@ -62,26 +79,26 @@ int main(){
                 for (int i = 0; i < TAM; i++) {
                     cout<<i+1<<"|";
                     for (int j = 0; j < TAM; j++) {
-                        //essa linha de baixo provavelmente será retirada adiciona cor usando ASCII o código para chamar ASCII foi passado mas não exatamente as cores  
+                        //essa linha de baixo provavelmente será retirada adiciona cor usando ASCII o código para chamar ASCII foi passado mas não exatamente as cores
                         if(i == 6) color=93;
                         if (j<3 && i<3 || j<3 && i>5 || j>5 && i>5 || j>5 && i<3 || j>2 && j<6 && i>2 && i<6){
-                            cout<<"\033["<<color<<"m"; 
+                            cout<<"\033["<<color<<"m";
                         }else{
                             cout<<"\033["<<0<<"m";
-                        }    
+                        }
                         cout << matrizGabarito[i][j];
                         if ((j+1)%3==0){
                             cout<<"\033["<<0<<"m"<<"|";
                         }else{
                             cout<<" ";
                         }
-                        
+
                     }
                     cout << "\n";
                     if ((i+1)%3==0){
                         cout<<" +-----+-----+-----+\n";
                     }
-                    
+
                 }
                 cout << "Insira em qual linha e coluna você quer colocar\t";
                 cin >> linha;
@@ -106,29 +123,28 @@ int main(){
                     cout << "Este Local já está preenchido"<<"\nPara seguir o jogo pressione Enter";
                         cin.ignore();
                         cout<< cin.get();
-                        cout<<"\033c"; 
+                        cout<<"\033c";
                 }
                 //aqui era debug pra ver o que tinha nesse campo da matriz
                 //cout << "\n" << matrizGabarito[linha - 1][coluna - 1] << "\n\n";
             } while (acertos < 40);
             if (acertos==40){
-                cout<<"Meus Parabéns você venceu"<<"\nPara ir ao menu pressione Enter";
+                cout<<"Meus Parabéns você venceu!!!"<<"\nPara ir ao menu pressione Enter";
                 cin.ignore();
                 cout<< cin.get();
-                cout<<"\033c"; 
+                cout<<"\033c";
             }
-            
+
         }
             break;
         case 2:
             cout<<"\033c";
               cout<<"+--------------------------------+-----------------------------------------------------------+\n"
-              <<"|                                |                                                           |\n"; 
+              <<"|                                |                                                           |\n";
               cout<<"|"<<" Esse jogo foi desenvolvido por "<<"|"<<" Regras do jogo                                            "<<"|\n"
               <<"|                                |                                                           |\n"
               <<"+--------------------------------+-----------------------------------------------------------+\n"
               <<"|"<<"  Andrey Felsky                 "<<"| Preencher a grade quadriculada com os números de 1 a 9    "<<"|\n"
-              <<"|"<<"                                "<<"|"<<" lista de palavras pré-definidas, ela conterá 6 letras.    "<<"|\n"
               <<"+--------------------------------+-----------------------------------------------------------+\n"
               <<"|"<<"  Bruno Dalbosco Rover          "<<"|"<<" Não repetir números nas linhas horizontais, verticais ou  "<<"|\n"
               <<"|"<<"                                "<<"|"<<" nos blocos quadrados                                      "<<"|\n"
@@ -140,7 +156,7 @@ int main(){
               <<"+--------------------------------+-----------------------------------------------------------+\n"
               <<"|"<<"  Erick Marlon Mafra            "<<"|"<<"                                                           "<<"|\n"
               <<"+--------------------------------+-----------------------------------------------------------+\n\n\n";
-              cout << "Data: outubro/2024 \n"
+              cout << "Data: novembro/2024 \n"
               << "Professor: Rafael Ballottin Martins / Algoritmos e Programação(24/2) \n"
               << "Para voltar ao menu pressione Enter";
               cin.ignore();
@@ -151,9 +167,9 @@ int main(){
             cout<<"Até a proxima :)";
             break;
         default:
-            cout << "Opção Invalida";
+            cout << "Opção Inválida";
             break;
         }
     }
-     
+
 }
