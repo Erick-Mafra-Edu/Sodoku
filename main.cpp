@@ -1,3 +1,4 @@
+//Executar em IDE linux (replit ou opengdb)
 #include<iostream>
 #include<locale.h>
 #include <time.h>
@@ -12,20 +13,20 @@ int main(){
     int linha, coluna;
     int matrizJogo[TAM][TAM];
     int matrizMestra[TAM][TAM] = {
-        4,9,5,2,8,7,3,6,1,
-        7,2,8,6,1,3,4,9,5,
-        3,6,1,9,5,4,7,2,8,
-        6,5,3,8,4,9,2,1,7,
-        9,8,4,1,7,2,6,5,3,
-        2,1,7,5,3,6,9,8,4,
-        1,3,2,4,6,5,8,7,9,
-        5,4,6,7,9,8,1,3,2,
-        8,7,9,3,2,1,5,4,6,
+      {4, 9, 5, 2, 8, 7, 3, 6, 1},
+      {7, 2, 8, 6, 1, 3, 4, 9, 5},
+      {3, 6, 1, 9, 5, 4, 7, 2, 8},
+      {6, 5, 3, 8, 4, 9, 2, 1, 7},
+      {9, 8, 4, 1, 7, 2, 6, 5, 3},
+      {2, 1, 7, 5, 3, 6, 9, 8, 4},
+      {1, 3, 2, 4, 6, 5, 8, 7, 9},
+      {5, 4, 6, 7, 9, 8, 1, 3, 2},
+      {8, 7, 9, 3, 2, 1, 5, 4, 6}
     };
     //menuloop
     while (option != 3){
         cout << "\033c";
-        cout << "Selecione uma das opções a seguir: \n 1 • Jogar \n 2 • Sobre \n 3 • Fim \n";
+        cout << "Selecione uma das opções a seguir: \n 1 • Jogar ▷\n 2 • Sobre ⁉️\n 3 • Fim 𝕏\n";
         cin >> option;
         switch (option){
         case 1:{
@@ -34,44 +35,48 @@ int main(){
             acertos = 0;
             //matriz resultado do jogo
             switch (seletor){
-        case 1:
-            //Sem modificação apenas copia os valores
-            for (int i = 0; i < TAM; i++){
-                for (int j = 0; j < TAM; j++){
-                    matrizJogo[i][j] = matrizMestra[i][j];
-                }
-            }break;
-        case 2:
-            //transposta
-            for (int i = 0; i < TAM; i++){
-                for (int j = 0; j < TAM; j++){
-                    matrizJogo[i][j] = matrizMestra[j][i];
-                }
-            }break;
-        case 3:
-            //INVERTIDA POR LINHA
-            for (int i = 0; i < TAM; i++){
-                for (int j = 0; j < TAM; j++){
-                    matrizJogo[i][j] = matrizMestra[8-i][j];
-                }
-            }break;
-        case 4:
-            // INVERTIDA POR COLUNA
-            for (int i = 0; i < TAM; i++){
-                for (int j = 0; j < TAM; j++){
-                    matrizJogo[i][j] = matrizMestra[i][8-j];
-                }
-            }break;
-        }
+                case 1:
+                    //Sem modificação apenas copia os valores
+                    for (int i = 0; i < TAM; i++){
+                        for (int j = 0; j < TAM; j++){
+                            matrizJogo[i][j] = matrizMestra[i][j];
+                        }
+                    }
+                break;
+                case 2:
+                    //transposta
+                    for (int i = 0; i < TAM; i++){
+                        for (int j = 0; j < TAM; j++){
+                            matrizJogo[i][j] = matrizMestra[j][i];
+                        }
+                    }
+                break;
+                case 3:
+                    //INVERTIDA POR LINHA
+                    for (int i = 0; i < TAM; i++){
+                        for (int j = 0; j < TAM; j++){
+                            matrizJogo[i][j] = matrizMestra[8-i][j];
+                        }
+                    }
+                break;
+                case 4:
+                    // INVERTIDA POR COLUNA
+                    for (int i = 0; i < TAM; i++){
+                        for (int j = 0; j < TAM; j++){
+                            matrizJogo[i][j] = matrizMestra[i][8-j];
+                        }
+                    }
+                break;
+            }
             //matriz para as respostas do jogador
             int matrizGabarito[TAM][TAM] = {};
-            for (int i = 0; i < 41; i++) {
+            int encontrados = 0;
+            while(encontrados < 41){
                 linha = rand() % TAM;
                 coluna = rand() % TAM;
                 if (matrizGabarito[linha][coluna] == 0) {
                     matrizGabarito[linha][coluna] = matrizJogo[linha][coluna];
-                } else {
-                    i--;
+                    encontrados++;
                 }
             }
             //variavel pro numero a ser colocado pelo usuario
@@ -83,8 +88,8 @@ int main(){
                     cout<<i+1<<"|";
                     for (int j = 0; j < TAM; j++) {
                         //essa linha de baixo provavelmente será retirada adiciona cor usando ASCII o código para chamar ASCII foi passado mas não exatamente as cores
-                        
-                        if (j<3 && i<3 || j<3 && i>5 || j>5 && i>5 || j>5 && i<3 || j>2 && j<6 && i>2 && i<6){
+
+                        if ( (j < 3 && i<3) || (j<3 && i>5) || (j>5 && i>5) || (j>5 && i<3) || ((j > 2) && (j < 6) && (i > 2) && ( i < 6))){
                             cout<<"\033["<<color<<"m";
                         }else{
                             cout<<"\033["<<0<<"m";
@@ -124,19 +129,17 @@ int main(){
                     }
                 } else {
                     cout << "Este Local já está preenchido"<<"\nPara seguir o jogo pressione Enter";
-                        cin.ignore();
-                        cout<< cin.get();
-                        cout<<"\033c";
+                    cin.ignore();
+                    cout<< cin.get();
+                    cout<<"\033c";
                 }
                 //aqui era debug pra ver o que tinha nesse campo da matriz
                 //cout << "\n" << matrizGabarito[linha - 1][coluna - 1] << "\n\n";
             } while (acertos < 40);
-            if (acertos==40){
-                cout<<"Meus Parabéns você venceu!!!"<<"\nPara ir ao menu pressione Enter";
-                cin.ignore();
-                cout<< cin.get();
-                cout<<"\033c";
-            }
+            cout<<"Meus Parabéns você venceu!!!"<<"\nPara ir ao menu pressione Enter";
+            cin.ignore();
+            cout<< cin.get();
+            cout<<"\033c";
 
         }
             break;
@@ -176,3 +179,25 @@ int main(){
     }
 
 }
+
+//Equipe de desenvolvimento
+
+// Andrey Felsky
+// 8273782
+// andreyfelsky@edu.univali.br
+
+// Bruno Dalbosco Rover
+// 8314144
+// bruno.8314144@edu.univali.br
+
+// Erick Marlon Mafra 
+// 8315728
+// erick.8315728@edu.univali.br
+
+// Rodrigo Buratto Ribas
+// 8330999
+// rodrigo.8330999@edu.univali.br
+
+// Wallacy Alvarenga
+// 6916694
+// wallacyalvarenga@univali.br
