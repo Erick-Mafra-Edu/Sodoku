@@ -5,14 +5,10 @@
 #define TAM 9
 using namespace std;
 int main(){
-    int color = 93;
-    int seletor,acertos;
     srand(time(NULL));
     setlocale(LC_ALL, "Portuguese");
-    int option = 0;
-    int linha, coluna;
-    int matrizJogo[TAM][TAM];
-    int matrizMestra[TAM][TAM] = {
+    int seletorCheck, acertos, jogadas = 0, seletor = 1, color = 93, option = 0, linha, coluna, matrizJogo[TAM][TAM],matrizGabarito[TAM][TAM] = {} ,encontrados = 0, entrada,
+    matrizMestra[TAM][TAM] = {
       {4, 9, 5, 2, 8, 7, 3, 6, 1},
       {7, 2, 8, 6, 1, 3, 4, 9, 5},
       {3, 6, 1, 9, 5, 4, 7, 2, 8},
@@ -24,14 +20,18 @@ int main(){
       {8, 7, 9, 3, 2, 1, 5, 4, 6}
     };
     //menuloop
-    while (option != 3){
+    do{
         cout << "\033c";
         cout << "Selecione uma das opções a seguir: \n 1 • Jogar ▷\n 2 • Sobre ⁉️\n 3 • Fim 𝕏\n";
         cin >> option;
         switch (option){
         case 1:{
-            //case jogo 
-            seletor = rand() % 4 + 1;
+            //vertifica se a posição ja foi usada
+            seletorCheck = rand() % 4 + 1;
+            while (seletorCheck == seletor){
+                seletorCheck = rand() % 4 + 1;
+            }
+            seletor = seletorCheck;
             acertos = 0;
             //matriz resultado do jogo
             switch (seletor){
@@ -68,9 +68,8 @@ int main(){
                     }
                 break;
             }
-            //matriz para as respostas do jogador
-            int matrizGabarito[TAM][TAM] = {};
-            int encontrados = 0;
+
+            //preenche a matriz para o jogo
             while(encontrados < 41){
                 linha = rand() % TAM;
                 coluna = rand() % TAM;
@@ -79,17 +78,15 @@ int main(){
                     encontrados++;
                 }
             }
-            //variavel pro numero a ser colocado pelo usuario
-            int entrada;
+
             do {
-                cout<<"  1 2 3 4 5 6 7 8 9\n"
+                cout<<"  0 1 2 3 4 5 6 7 8\n"
                 <<" +-----+-----+-----+\n";
                 for (int i = 0; i < TAM; i++) {
-                    cout<<i+1<<"|";
+                    cout<<i<<"|";
                     for (int j = 0; j < TAM; j++) {
-                        //essa linha de baixo provavelmente será retirada adiciona cor usando ASCII o código para chamar ASCII foi passado mas não exatamente as cores
-
-                        if ( (j < 3 && i<3) || (j<3 && i>5) || (j>5 && i>5) || (j>5 && i<3) || ((j > 2) && (j < 6) && (i > 2) && ( i < 6))){
+                        //muda a cor das matrizes
+                        if ( (j < 3 && i < 3) || (j < 3 && i > 5) || (j > 5 && i > 5) || (j > 5 && i < 3) || ((j > 2) && (j < 6) && (i > 2) && ( i < 6))){
                             cout<<"\033["<<color<<"m";
                         }else{
                             cout<<"\033["<<0<<"m";
@@ -108,18 +105,38 @@ int main(){
                     }
 
                 }
-                cout << "Insira em qual linha e coluna você quer colocar\t";
+                //solicita a entrada dos valores
+                cout << "Insira em qual linha você quer colocar\n";
+
+                //define o valor da linha e valida se atende a matriz
                 cin >> linha;
+                while(linha >= TAM || linha < 0){
+                    cout << "Valor para a linha digitada está invalida, por favor selecione um valor de 0 a " << (TAM - 1) << "\n";
+                    cin >> linha;
+                }
+                cout << "Insira em qual coluna você quer colocar\n";
+
+                //define o valor da coluna e valida se atende a matriz
                 cin >> coluna;
-                if (matrizGabarito[linha - 1][coluna - 1] == 0) {
+                while(coluna >= TAM || linha < 0){
+                    cout << "Valor para a coluna digitada está invalida, por favor selecione um valor de 0 a " << (TAM - 1) << "\n";
+                    cin >> coluna;
+                }
+
+                //verifica se o valor da matriz ja foi preenchido
+                if (matrizGabarito[linha][coluna] == 0) {
+                    //define o valor a ser validade da matriz
+                    cout << "Insira o valor que você quer colocar para: (" << linha << "X" << coluna << ") \t";
                     cin >> entrada;
-                    if (entrada == matrizJogo[linha - 1][coluna - 1]) {
+
+                    //verificas se o valor digitado esta valido
+                    if (entrada == matrizJogo[linha][coluna]) {
                         cout << "Acertou"<< "\nPara seguir o jogo pressione Enter";
                         cin.ignore();
                         cout<< cin.get();
                         cout<<"\033c";
                         acertos++;
-                        matrizGabarito[linha - 1][coluna - 1] = entrada;
+                        matrizGabarito[linha][coluna] = entrada;
                     } else {
                         cout << "Você errou"
                         << "\nPara seguir o jogo pressione Enter";
@@ -133,14 +150,12 @@ int main(){
                     cout<< cin.get();
                     cout<<"\033c";
                 }
-                //aqui era debug pra ver o que tinha nesse campo da matriz
-                //cout << "\n" << matrizGabarito[linha - 1][coluna - 1] << "\n\n";
+                jogadas++;
             } while (acertos < 40);
-            cout<<"Meus Parabéns você venceu!!!"<<"\nPara ir ao menu pressione Enter";
+            cout<<"Meus Parabéns você venceu em "<< jogadas << " jogadas!!!"<<"\nPara ir ao menu pressione Enter";
             cin.ignore();
             cout<< cin.get();
             cout<<"\033c";
-
         }
             break;
         case 2:
@@ -176,7 +191,7 @@ int main(){
             cout << "Opção Inválida";
             break;
         }
-    }
+    }while (option == 3);
 
 }
 
